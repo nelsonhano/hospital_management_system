@@ -3,7 +3,9 @@ import { getUser } from '@/lib/actions/patient.action'
 import Image from 'next/image';
 import React from 'react'
 
-export default async function Page({ params: { userId } }: SearchParamProps) {
+export default async function Page({ params }: SearchParamProps) {
+    const getById = await params;
+    const { userId } = getById
     const user = await getUser(userId);
 
     return (
