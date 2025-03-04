@@ -1,8 +1,16 @@
-import StatCard from "@/components/ui/StatCard";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 
-export default function Admin() {
+
+import StatCard from "@/components/ui/StatCard";
+import { getRecentAppointmentList } from "@/lib/actions/appointment.action";
+import { DataTable } from "@/components/table/DataTable";
+import { columns, Payment } from "@/components/table/columns";
+
+export default async function Admin() {
+    const appointments = await getRecentAppointmentList();
+    const { schduledCount, pendingCount, cancelledCount, documents } = appointments;
+
   return (
     <div className="mx-auto flex max-w-7xl flex-col space-y-4">
         <header className="admin-header">
@@ -28,25 +36,27 @@ export default function Admin() {
             <section className="admin-stat">
                 <StatCard 
                     type='appointments'
-                    count={5}
+                    count={schduledCount}
                     label='Schduled appointment'
-                      icon='/assets/icons/appointments.svg'
+                    icon='/assets/icons/appointments.svg'
                 />
 
                 <StatCard
                     type='pending'
-                    count={20}
+                    count={pendingCount}
                     label='Pending appointment'
                     icon='/assets/icons/pending.svg'
                 />
 
-               <StatCard
+                <StatCard
                     type='cancelled'
-                    count={3}
+                    count={cancelledCount}
                     label='Cancelled appointment'
                     icon='/assets/icons/cancelled.svg'
                 />
             </section>
+
+            <DataTable columns={columns} data={documents} />
         </main>
     </div>
   );

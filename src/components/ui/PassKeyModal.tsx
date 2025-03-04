@@ -43,10 +43,6 @@ export default function PassKeyModal() {
     useEffect(()=> {
         const accessKey = getEncryptedAccessKey && decryptKey(getEncryptedAccessKey);
         
-        console.log('Get Encrypted Access Key:', getEncryptedAccessKey);
-        console.log('Get Decrypted Access Key:', decryptKey(getEncryptedAccessKey || ''));
-        console.log('Checking if Encrypted and Decrypted are the same:',accessKey);
-        
         if (path) {
             if (accessKey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
                 setOpen(false);
