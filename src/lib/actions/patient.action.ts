@@ -83,10 +83,8 @@ export const getPatient = async (userId: string) => {
 };
 
 export const updateAppointment = async ({ 
-    userId, 
     appointmentId, 
     appointment, 
-    type 
 }:UpdateAppointmentParams
 ) => {
     try {
