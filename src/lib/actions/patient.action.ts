@@ -1,17 +1,16 @@
 'use server';
 
 import { ID, Query } from "node-appwrite";
-import { BUCKET_ID, database, DATABASE_ID, ENDPOINT_ID, PATIENTS_COLLECTION_ID, PROJECT_ID, storage, users } from "../appwrite.config";
+import { APPOINTMENTS_COLLECTION_ID, BUCKET_ID, database, DATABASE_ID, ENDPOINT_ID, PATIENTS_COLLECTION_ID, PROJECT_ID, storage, users } from "../appwrite.config";
 import { parseStringify } from "../utils";
 import { InputFile } from 'node-appwrite/file';
+import { revalidatePath } from "next/cache";
 
 
 export const createUser = async ({ email, phone, name }: CreateUserParams) => {
     try {
         const newUser = await users.create(ID.unique(), email, phone, undefined, name);
 
-        console.log({ newUser });
-        
         return parseStringify(newUser)
     } catch (error: any) {
         console.log(error);
@@ -35,7 +34,7 @@ export const getUser = async (userId: string) => {
         console.log(error);
         
     }
-}
+};
 
 export const registerPatient = async ({ identificationDocument, ...patient }: RegisterUserParams) => {
     
@@ -67,7 +66,7 @@ export const registerPatient = async ({ identificationDocument, ...patient }: Re
         console.log(error);
         
     }
-}
+};
 
 export const getPatient = async (userId: string) => {
     try {
@@ -80,5 +79,35 @@ export const getPatient = async (userId: string) => {
         return parseStringify((await patient).documents[0]);
     } catch (error) {
         console.log(error);
+    }
+};
+
+export const updateAppointment = async ({ 
+    userId, 
+    appointmentId, 
+    appointment, 
+    type 
+}:UpdateAppointmentParams
+) => {
+    try {
+        const updatedAppointment = await database.updateDocument(
+            DATABASE_ID!,
+            APPOINTMENTS_COLLECTION_ID!,
+            appointmentId,
+            appointment
+        );
+
+        if (!updatedAppointment) {
+            throw new Error("Appointment not found");
+        };
+
+        //TODO SMS notification
+
+        revalidatePath("/admin");
+
+            return parseStringify({updateAppointment});
+    } catch (error) {
+        console.log(error);
+        
     }
 }

@@ -1,5 +1,7 @@
 "use client"
 
+import Image from "next/image";
+
 import {
   ColumnDef,
   flexRender,
@@ -15,8 +17,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Button } from "../ui/button"
+} from "@/components/ui/table";
+import { Button } from "../ui/button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -35,11 +37,11 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className="rounded-md border w-full">
-      <Table>
-        <TableHeader>
+    <div className="date-table">
+      <Table className="shad-table">
+        <TableHeader className="bg-dark-200">
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow key={headerGroup.id} className="shad-table-row">
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead key={header.id}>
@@ -79,14 +81,21 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
 
-      <div className="flex items-center justify-end mr-4 space-x-2 py-4">
+      <div className="table-actions">
         <Button
           variant="outline"
           size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+          className="shad-gray-btn"
         >
-          Previous
+          <Image 
+            src='/assets/icons/arrow.svg'
+            width={24}
+            height={24}
+            alt="arrow"
+            className="rotate-180"
+          />
         </Button>
         <Button
           variant="outline"

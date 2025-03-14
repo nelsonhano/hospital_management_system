@@ -10,8 +10,20 @@ import {
 } from "@/components/ui/dialog"
 import { useState } from "react"
 import { Button } from "./button";
+import { Appointment } from "@/types/appwrite.types";
+import AppointmentForm from "../form/AppointmentForm";
 
-export default function AppointmentModal({ type }: { type: 'schedule' | 'cancel'}) {
+export default function AppointmentModal({ 
+    type,
+    appointment,
+    userId,
+    patientId,
+ }: { 
+    type: 'schedule' | 'cancel',
+    appointment: Appointment,
+    userId: string,
+    patientId: string,
+}) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -28,10 +40,17 @@ export default function AppointmentModal({ type }: { type: 'schedule' | 'cancel'
             <DialogHeader className="mb-4 space-y-3">
                     <DialogTitle className="capitalize">{type} Appointment</DialogTitle>
                 <DialogDescription>
-                    This action cannot be undone. This will permanently delete your account
-                    and remove your data from our servers.
+                    Please fill in the following details to {type} an appointment
                 </DialogDescription>
             </DialogHeader>
+
+            <AppointmentForm
+                    userId={userId}
+                    patientId={patientId}
+                    type={type}
+                    appointment={appointment}
+                    setOpen={setOpen}
+            />
         </DialogContent>
     </Dialog>
 

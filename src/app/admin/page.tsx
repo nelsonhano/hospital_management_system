@@ -5,12 +5,12 @@ import Image from "next/image";
 import StatCard from "@/components/ui/StatCard";
 import { getRecentAppointmentList } from "@/lib/actions/appointment.action";
 import { DataTable } from "@/components/table/DataTable";
-import { columns, Payment } from "@/components/table/columns";
+import { columns } from "@/components/table/columns";
 
 export default async function Admin() {
     const appointments = await getRecentAppointmentList();
-    const { schduledCount, pendingCount, cancelledCount, documents } = appointments;
-
+    
+    const { scheduledCount, pendingCount, cancelled, documents } = appointments;
   return (
     <div className="mx-auto flex max-w-7xl flex-col space-y-4">
         <header className="admin-header">
@@ -36,7 +36,7 @@ export default async function Admin() {
             <section className="admin-stat">
                 <StatCard 
                     type='appointments'
-                    count={schduledCount}
+                      count={scheduledCount}
                     label='Schduled appointment'
                     icon='/assets/icons/appointments.svg'
                 />
@@ -50,7 +50,7 @@ export default async function Admin() {
 
                 <StatCard
                     type='cancelled'
-                    count={cancelledCount}
+                      count={cancelled}
                     label='Cancelled appointment'
                     icon='/assets/icons/cancelled.svg'
                 />

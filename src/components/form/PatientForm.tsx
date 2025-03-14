@@ -45,7 +45,6 @@ export default function PatientForm() {
     
     try {
       const user = await createUser(FormData);
-      console.log(user);
       
       if (user) {
         router.push(`/patients/${user.$id}/register`);
