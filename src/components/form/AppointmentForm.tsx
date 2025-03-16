@@ -35,6 +35,7 @@ export default function AppointmentForm({
 }) {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
+    console.log({ appointment });
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof CreateAppointmentSchema>>({
@@ -44,7 +45,7 @@ export default function AppointmentForm({
             schedule: appointment ? new Date(appointment.schedule) : new Date(Date.now()),
             reason: appointment ? appointment.reason : '',
             note: appointment ? appointment.note : '',
-            cancellationReason: appointment.cancellationReason || ''
+            cancellationReason: appointment ? appointment.cancellationReason : ''
         },
     });
 
