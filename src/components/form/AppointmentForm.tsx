@@ -188,6 +188,61 @@ export default function AppointmentForm({
                     </>
                 )}
 
+                {type === 'create' && (
+                    <>
+                        <CustomeFormField
+                            fieldType={FormFieldType.SELECT}
+                            control={form.control}
+                            name='primaryPhysician'
+                            label='Doctor'
+                            placeholder='Select a doctor'
+                        >
+                            {Doctors.map((doctor) => (
+                                <SelectItem value={doctor.name} key={doctor.name}>
+                                    <div className="flex cursor-pointer gap-2 items-center">
+                                        <Image
+                                            src={doctor.image}
+                                            width={32}
+                                            height={32}
+                                            alt={doctor.name}
+                                            className="rounded-full border border-dark-500"
+                                        />
+                                        <p>{doctor.name}</p>
+                                    </div>
+                                </SelectItem>
+                            ))}
+                        </CustomeFormField>
+
+                        <CustomeFormField
+                            fieldType={FormFieldType.DATE_PICKER}
+                            control={form.control}
+                            name='schedule'
+                            label="Expected appointment date"
+                            showTimeSelect
+                            dateFormat="MM/dd/yyyy - h:mm aa"
+                        />
+
+                        <div className="flex flex-col gap-6 xl:flex-row">
+                            <CustomeFormField
+                                fieldType={FormFieldType.TEXTAREA}
+                                name='reason'
+                                label="Reason for appointment"
+                                control={form.control}
+                                placeholder="Enter reason for appointment"
+                            />
+
+                            <CustomeFormField
+                                fieldType={FormFieldType.TEXTAREA}
+                                name='note'
+                                label="Note"
+                                control={form.control}
+                                placeholder="Enter note"
+                            />
+                        </div>
+                    </>
+                )}
+
+
                 {type === 'cancel' && (
                     <>
                         <div className="flex flex-col gap-6 xl:flex-row">
