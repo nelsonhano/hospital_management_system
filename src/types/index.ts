@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 
-// declare type SearchParamProps = {
-//     params: { [key: string]: string };
-//     searchParams: {[key: string]: string | string[] | undefined };
-// };
+import { Appointment } from "./appwrite.types";
 
-declare type Gender = "Male" | "Female" | "Other";
-declare type Status = "pending" | "scheduled" | "cancelled";
+export declare type SearchParamProps = {
+    params: { [key: string]: string };
+    searchParams: {[key: string]: string | string[] | undefined };
+};
+
+export declare type Gender = "Male" | "Female" | "Other";
+export declare type Status = "pending" | "scheduled" | "cancelled";
 
 declare interface CreateUserParams {
     name: string;

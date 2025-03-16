@@ -1,5 +1,6 @@
 import AppointmentForm from "@/components/form/AppointmentForm";
 import { getPatient } from "@/lib/actions/patient.action";
+import { SearchParamProps } from "@/types";
 import Image from "next/image";
 
 export default async function NewAppointment({ params }:SearchParamProps) {

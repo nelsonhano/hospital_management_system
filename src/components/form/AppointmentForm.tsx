@@ -19,6 +19,7 @@ import Image from "next/image";
 import { createAppointment } from "@/lib/actions/appointment.action";
 import { Appointment } from "@/types/appwrite.types";
 import { updateAppointment } from "@/lib/actions/patient.action";
+import { Status } from "@/types";
 
 export default function AppointmentForm({ 
     type, 
@@ -30,8 +31,8 @@ export default function AppointmentForm({
     type: 'create' | 'cancel' | 'schedule', 
     userId: string, 
     patientId: string,
-    appointment: Appointment,
-    setOpen: (open: boolean) => void
+    appointment?: Appointment,
+    setOpen?: (open: boolean) => void
 }) {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
@@ -45,7 +46,7 @@ export default function AppointmentForm({
             schedule: appointment ? new Date(appointment.schedule) : new Date(Date.now()),
             reason: appointment ? appointment.reason : '',
             note: appointment ? appointment.note : '',
-            cancellationReason: appointment ? appointment.cancellationReason : ''
+            cancellationReason: appointment?.cancellationReason || ''
         },
     });
 
@@ -102,7 +103,7 @@ export default function AppointmentForm({
             } else {
                 const appointmentToUpdte = {
                     userId,
-                    appointmentId: appointment.$id,
+                    appointmentId: appointment?.$id,
                     appointment: {
                         primaryPhysician: FormData?.primaryPhysician,
                         schedule: new Date(FormData?.schedule),
